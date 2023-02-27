@@ -16,6 +16,6 @@ echo "RAM_FREE =" $(free  |  head -2 | tail +2 | awk '{printf("%.3f", $4/(1024*1
 echo "SPACE_ROOT =" $(df / |  head -2 | tail +2 | awk '{printf("%.2f", $2/1024)} {print "Mb"}') >> txt.txt
 echo "SPACE_ROOT_USED =" $(df / |  head -2 | tail +2 | awk '{printf("%.2f", $3/1024)} {print "Mb"}') >> txt.txt
 echo "SPACE_ROOT_FREE =" $(df / |  head -2 | tail +2 | awk '{printf("%.2f", $4/1024)} {print "Mb"}') >> txt.txt
-
+cat txt.txt
 sh out.sh
 # date +"%d_%m_%y_%H_%M_%S"  DD_MM_YY_HH_MM_SS.status
