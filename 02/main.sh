@@ -3,7 +3,7 @@
 echo "HOSTNAME =" $(hostname) >> txt.txt
 echo "TIMEZONE =" $(timedatectl | awk '{print $3}' | head -4 | grep '/') >> txt.txt
 echo "USER =" $(whoami) >> txt.txt
-echo "OS =" $(cat /etc/issue | tr -s '\\l\n' ' ') >> txt.txt
+echo "OS =" $(cat /etc/issue | tr -s '\n' ' ' | tr -s '\r' ' ' | tr -s '\\' ' ') >> txt.txt
 echo "DATE =" $(date -R | awk '{print $2, $3, $4, $5}') >> txt.txt
 echo "UPTIME =" $(uptime -p | awk '{print $2, $3}') >> txt.txt
 echo "UPTIME_SEC =" $(cat /proc/uptime | awk '{print $1, "seconds"}') >> txt.txt
