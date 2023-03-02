@@ -1,9 +1,13 @@
 #!/bin/bash
 
 echo "HOSTNAME =" $(hostname) >> txt.txt
-echo "TIMEZONE =" $(timedatectl | awk '{print $3}' | head -4 | grep '/') >> txt.txt
+#echo "TIMEZONE =" $(timedatectl | awk '{print $3}' | head -4 | grep '/') >> txt.txt
+tzone=$(timedatectl | grep "Time zone" | awk '{print $3}')
+utc=$(date +%z)
+echo "TIMEZONE = $tzone UTC $utc" >> txt.txt
 echo "USER =" $(whoami) >> txt.txt
-echo "OS =" $(cat /etc/issue | tr -s '\n' ' ' | tr -s '\r' ' ' | tr -s '\\' ' ') >> txt.txt
+#echo "OS =" $(cat /etc/issue | tr -s '\n' ' ' | tr -s '\r' ' ' | tr -s '\\' ' ') >> txt.txt
+echo "OS =" $(lsb_release -a | grep Description | awk '{print $2, $3}') >> txt.txt
 echo "DATE =" $(date -R | awk '{print $2, $3, $4, $5}') >> txt.txt
 echo "UPTIME =" $(uptime -p | awk '{print $2, $3}') >> txt.txt
 echo "UPTIME_SEC =" $(cat /proc/uptime | awk '{print $1, "seconds"}') >> txt.txt

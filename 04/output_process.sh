@@ -2,9 +2,13 @@
 chmod +x color.sh
 COL_CONF=./color.sh
 echo $($COL_CONF $1 $2) "HOSTNAME =" $($COL_CONF $3 $4) $(hostname) 
-echo $($COL_CONF $1 $2) "TIMEZONE =" $($COL_CONF $3 $4) $(timedatectl | awk '{print $3}' | head -4 | grep '/')
+#echo $($COL_CONF $1 $2) "TIMEZONE =" $($COL_CONF $3 $4) $(timedatectl | awk '{print $3}' | head -4 | grep '/')
+tzone=$(timedatectl | grep "Time zone" | awk '{print $3}')
+utc=$(date +%z)
+echo $($COL_CONF $1 $2) "TIMEZONE = $($COL_CONF $3 $4) $tzone UTC $utc"
 echo $($COL_CONF $1 $2) "USER =" $($COL_CONF $3 $4) $(whoami)
-echo $($COL_CONF $1 $2) "OS =" $($COL_CONF $3 $4) $(cat /etc/issue | tr -s '\n' ' ' | tr -s '\r' ' ' | tr -s '\\' ' ')
+#echo $($COL_CONF $1 $2) "OS =" $($COL_CONF $3 $4) $(cat /etc/issue | tr -s '\n' ' ' | tr -s '\r' ' ' | tr -s '\\' ' ')
+echo $($COL_CONF $1 $2) "OS =" $($COL_CONF $3 $4) $(lsb_release -a | grep Description | awk '{print $2, $3}')
 echo $($COL_CONF $1 $2) "DATE =" $($COL_CONF $3 $4) $(date -R | awk '{print $2, $3, $4, $5}')
 echo $($COL_CONF $1 $2) "UPTIME =" $($COL_CONF $3 $4) $(uptime -p | awk '{print $2, $3}')
 echo $($COL_CONF $1 $2) "UPTIME_SEC =" $($COL_CONF $3 $4) $(cat /proc/uptime | awk '{print $1, "seconds"}')
